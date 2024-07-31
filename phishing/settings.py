@@ -22,7 +22,6 @@ BAS_DIR = os.path.join(BASE_DIR, 'content_based')
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-w-h4iuxh2$chu_x%n_98=y+9klqp(-5+hf7#5lku)(tlr%y9*u'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
