@@ -2,8 +2,6 @@
 
 Phishing Sentinel is a Django-based web application designed to detect phishing websites using machine learning models. This project leverages a content-based approach to analyze and classify websites as either legitimate or phishing.
 
-![Phishing Sentinel](static/logo.png)
-
 ## Table of Contents
 
 - [Introduction](#introduction)
@@ -12,9 +10,6 @@ Phishing Sentinel is a Django-based web application designed to detect phishing 
 - [Usage](#usage)
 - [Dataset](#dataset)
 - [Models](#models)
-- [Project Structure](#project-structure)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## Introduction
 
@@ -84,6 +79,7 @@ The dataset used for this project is composed of both legitimate and phishing we
 
 - **Legitimate Websites**: Data sourced from tranco-list.eu's "top-1M.csv".
 - **Phishing Websites**: Data sourced from "PhiUSIIL_Phishing_URL_Dataset".
+ ![Dataset](static/pie_chart.png)
 
 The dataset includes 43 features and consists of 37,798 websites, out of which 21,266 are legitimate and 16,532 are phishing websites.
 
@@ -94,6 +90,6 @@ The application uses several machine learning models, including:
 - **Decision Tree**
 - **Random Forest**
 - **XGBoost Classifier**
-
+ ![Models](static/models.png)
 Each model has been evaluated based on accuracy, precision, and recall using K-fold cross-validation.
 
