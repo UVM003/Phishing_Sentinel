@@ -1,0 +1,158 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Phishing Sentinel</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .header, .footer {
+            text-align: center;
+        }
+        .footer {
+            margin-top: 30px;
+        }
+        .alert {
+            margin-top: 20px;
+        }
+        .content-section {
+            background-color: #e9ecef;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        .content-section h3 {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="header">
+            <h1 class="mb-4">Phishing Sentinel</h1>
+        </div>
+        <form method="POST" class="mb-4">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="url">Enter URL:</label>
+                <input type="text" class="form-control" id="url" name="url" value="{{ url }}" required>
+            </div>
+            <div class="form-group">
+                <label for="model">Select Model:</label>
+                <select class="form-control" id="model" name="model">
+                    <option value="Random Forest" {% if model_name == 'Random Forest' %}selected{% endif %}>Random Forest</option>
+                    <option value="Decision Tree" {% if model_name == 'Decision Tree' %}selected{% endif %}>Decision Tree</option>
+                    
+                    <option value="XGBoost Classifier" {% if model_name == 'XGBoost Classifier'%}selected{% endif %}>XGBoost Classifier</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Check</button>
+        </form>
+
+        {% if status %}
+            <div id="prediction-message" class="alert alert-{{ color }}">
+                {% if status == 'success' %}
+                    <strong>Prediction:</strong> {{ prediction }}
+                {% else %}
+                    <strong>Error:</strong> {{ message }}
+                {% endif %}
+            </div>
+            <script>
+                setTimeout(function(){
+                    // Clear the URL input field
+                    document.getElementById('url').value = '';
+                    // Clear the model selection
+                    document.getElementById('model').selectedIndex = 0;
+                    // Remove the prediction message
+                    document.getElementById('prediction-message').remove();
+                }, 7000);
+            </script>
+        {% endif %}
+
+        <div class="content-section">
+            <h3>Phishing Website Detection using Machine Learning</h3>
+            <p>
+                This ML-based app is developed for educational purposes. The objective of the app is detecting phishing websites using content data, not the URL!
+                <hr>
+                We used supervised learning to classify phishing and legitimate websites.
+                We benefit from a content-based approach and focus on the HTML of the websites.
+                Also, we used scikit-learn for the ML models.
+                We created our own dataset and defined features, some from the literature and some based on manual analysis.
+                We used the requests library to collect data, and the BeautifulSoup module to parse and extract features.
+            </p>
+        </div>
+        <div class="footer">
+            <a href="/more-info" class="btn btn-info">Want to know more?</a>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="tipModal" tabindex="-1" role="dialog" aria-labelledby="tipModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="tipModalLabel">Tips for Identifying Phishing Websites</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <main>
+                        <section class="tip">
+                            <p>As soon as a user opens a website, look at the address bar. If the URL starts with 'https://' or 'shttp://', it indicates that the connection is encrypted and secured. If not, leave the website immediately.</p>
+                        </section>
+                        <section class="tip">
+                            <p>Check the end of the web address. It should end with .org, .com, .edu, etc. Ensure the website's spelling is correct. For example, 'yahoo.com' could be misspelled as 'yah00.com' (with zeros), which indicates a fake website.</p>
+                        </section>
+                        <section class="tip">
+                            <p>If a website looks poorly designed, with spelling mistakes, broken English, or low-resolution images, leave the website immediately as it might not be legitimate.</p>
+                        </section>
+                        <section class="tip">
+                            <p>Legitimate websites usually have a contact page. If there is no postal address or social media handles provided, the website is likely not legitimate.</p>
+                        </section>
+                        <section class="tip">
+                            <p>If a website provides very little information, it could be suspicious. Be cautious.</p>
+                        </section>
+                        <section class="tip">
+                            <p>Check for reviews. Legitimate websites often have a review section.</p>
+                        </section>
+                        <section class="tip">
+                            <p>Trusted payment methods usually ask for credit cards or redirect to PayPal for transactions. If a website asks for bank details directly, it's a big red flag.</p>
+                        </section>
+                        <section class="tip">
+                            <p>Legitimate websites send notifications through SMS, email, or as mentioned in the login field. If no such notifications are found, do not trust the website.</p>
+                        </section>
+                        <section class="tip">
+                            <p>If a website gives an option to log in through Google, it's generally safe and you can proceed.</p>
+                        </section>
+                    </main>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            if (!sessionStorage.getItem('tipModalShown')) {
+                $('#tipModal').modal('show');
+                sessionStorage.setItem('tipModalShown', 'true');
+            }
+        });
+    </script>
+</body>
+</html>
+

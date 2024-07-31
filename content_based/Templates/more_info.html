@@ -1,0 +1,148 @@
+
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>More Information - Phishing Sentinel</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+        .header {
+            text-align: center;
+        }
+        .collapsible-section {
+            margin-top: 20px;
+        }
+        .collapsible-section .card-header {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="mb-4">Phishing Sentinel</h1>
+        </div>
+
+        <div class="collapsible-section" id="accordion">
+            <div class="card">
+                <div class="card-header" id="headingDataset" data-toggle="collapse" data-target="#collapseDataset" aria-expanded="true" aria-controls="collapseDataset">
+                    <h5 class="mb-0">Dataset Creation</h5>
+                </div>
+
+                <div id="collapseDataset" class="collapse show" aria-labelledby="headingDataset" data-parent="#accordion">
+                    <div class="card-body">
+                        <p>
+                            We used tranco-list.eu's "top-1M.csv" as data source for legitimate website selection and "PhiUSIIL_Phishing_URL_Dataset"  as data source for phishing website selection.<br>
+                            Data was collected using the requests library to fetch HTML content of websites.<br>
+                            BeautifulSoup was used to parse and extract relevant features from the HTML.<br>
+                            We have selected a total of 43 features .<br>
+                            The dataset curated by us has totally 37,798 websites ==> 21,266 <b><i>Legitimate</i></b> websites and 16,532 <b><i>Phishing</i></b> websites.<br>
+                            Data set was created in July 2024.<br>
+                            <img  style="margin-left: 8rem;" src="{% static 'pie_chart.png' %}"  alt="Pie chart">
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card"  >
+                <div class="card-header" id="headingModel" style="margin-top: 3rem;"  data-toggle="collapse" data-target="#collapseModel" aria-expanded="false" aria-controls="collapseModel">
+                    <h5 class="mb-0">Model Creation</h5>
+                </div>
+
+                <div id="collapseModel" class="collapse" aria-labelledby="headingModel" data-parent="#accordion">
+                    <div class="card-body">
+                        <p>
+                            We experimented with several ML models including Gaussian Naive Bayes, Support Vector Machine, Decision Tree, Random Forest, AdaBoost, Neural Network, and K-Neighbors.<br>
+                            Finally we selected three models, based on parameters of Accuracy,Precision and Recall, We used K-fold Cross validation to calculate these parameters<br>
+                            <img style="margin-left: 8rem;" src="{% static 'models.png' %}" alt="Selected Models">
+                            <h3 style="margin-top: 2rem;">Random Forest</h3>
+                            <div>
+                                <p>Random Forest is an ensemble learning method that constructs multiple decision trees during training and outputs the mode of the classes (classification) or the mean prediction (regression) of the individual trees. It improves accuracy and prevents overfitting by averaging multiple independent models.</p>
+                                <br>
+                                <img  style="margin-left: 8rem;" src="{% static 'rf.png' %}" alt="Random forest">
+                                <p>
+                                    Random Forest accuracy ==>  0.9625328751860265<br>
+                                    Random Forest precision ==>  0.89949467294567<br>
+                                    Random Forest recall ==>  0.7854832730692219<br>
+                                       
+                                    
+                                </p>
+                            </div>
+                            <h3 style="margin-top: 2rem;">Decision Tree</h3>
+                            <div>
+                                <p>
+                                    Decision Tree is a supervised learning algorithm used for classification and regression tasks. It partitions the data into subsets based on the value of attributes and recursively splits them until a stopping criterion is met. Each split is made to maximize information gain or minimize impurity, making it interpretable and easy to visualize.
+                                </p>
+                                <br>
+                                <img style="margin-left: 8rem;" src="{% static 'dt.png' %}" alt="Decision Tree">
+                                <p>
+                                    Decision Tree accuracy ==>  0.9481699792624819<br>
+                                    Decision Tree precision ==>  0.8171142732449761<br>
+                                    Decision Tree recall ==>  0.826265729102901<br>
+                                </p>
+                            
+                            </div>
+                            <h3 style="margin-top: 2rem;">XGBoost Classifier</h3>
+                            <div>
+                                <p>
+                                    XGBoost (Extreme Gradient Boosting) is an optimized gradient boosting algorithm designed for speed and performance. It sequentially builds a series of weak learners (typically decision trees) and combines them to produce a strong learner. XGBoost uses regularization techniques and parallel computing to achieve high accuracy and efficiency in both classification and regression tasks.
+                                </p>
+                                <br>
+                                <img  style="margin-left: 8rem;" src="{% static 'xgb.png' %}" alt="XGBoost Classifier">
+                                <p>
+                                    XGB Classifier accuracy ==>  0.9194822826318817<br>
+                                    XGB Classifier precision ==>  0.8157559780220457<br>
+                                    XGB Classifier recall ==>  0.5099583611339051<br>
+                                </p>
+                            
+                            </div>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header" id="headingDjango" style="margin-top: 3rem;" data-toggle="collapse" data-target="#collapseDjango" aria-expanded="false" aria-controls="collapseDjango">
+                    <h5 class="mb-0">Django Development</h5>
+                </div>
+
+                <div id="collapseDjango" class="collapse" aria-labelledby="headingDjango" data-parent="#accordion">
+                    <div class="card-body">
+                        <p>
+                            The app is developed using the Django framework. It handles user input, sends requests to the specified URLs, parses the responses, extracts features, and makes predictions using the trained ML models.<br>
+                            We have saved our ML as .pkl files using <i>Joblib</i> module of python and have used the same for prediction process<br>
+
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+<div style="display: flex; justify-content: space-between;">
+        <div class="footer mt-4">
+            <a href="/" class="btn btn-primary">Back to Main Page</a>
+        </div>
+        <div class="footer mt-4">
+            <a href="{% static 'report.pdf' %}" download class="btn btn-primary">Download PDF</a>
+        </div>
+        <div class="footer mt-4">
+            <a href="/feedback" class="btn btn-primary">Feedback</a>
+        </div>
+        
+    </div>
+    </div>
+</body>
+</html>
