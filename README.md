@@ -90,6 +90,5 @@ The application uses several machine learning models, including:
 - **Decision Tree**
 - **Random Forest**
 - **XGBoost Classifier**
- ![Models](content_based/static/models.png)
 Each model has been evaluated based on accuracy, precision, and recall using K-fold cross-validation.
-
+ ![Models](content_based/static/models.png)
